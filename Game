@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <style>body { display: flex; justify-content: center; align-items: center; height: 100vh; }</style>
+  </head>
+  <body>
+    <script>
+      let tokens = 10; // Starting tokens
+      let temperature = 0;
+      const targetTemperature = 100;
+      const pumps = [
+        { name: "Standard Pump", efficiency: 1.5 },
+        { name: "High-Efficiency Pump", efficiency: 2.5 }
+      ];
+
+      function setup() {
+        createCanvas(400, 400);
+        textSize(16);
+      }
+
+      function draw() {
+        background(220);
+        fill(0);
+        text(`Tokens: ${tokens}`, 10, 20);
+        text(`Temperature: ${temperature}`, 10, 40);
+        text(`Target: ${targetTemperature}`, 10, 60);
+
+        pumps.forEach((pump, index) => {
+          text(`${pump.name} - Efficiency: ${pump.efficiency}`, 10, 100 + index * 40);
+          if (mouseIsPressed && mouseY > 80 + index * 40 && mouseY < 100 + index * 40 && tokens > 0) {
+            tokens--;
+            temperature += pump.efficiency;
+          }
+        });
+
+        if (temperature >= targetTemperature) {
+          text("You reached the target!", 10, 200);
+          noLoop();
+        }
+      }
+    </script>
+  </body>
+</html>
